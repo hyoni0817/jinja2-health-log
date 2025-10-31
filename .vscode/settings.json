@@ -8,5 +8,9 @@
   "prettier.pluginSearchDirs": ["./"],
   "files.associations": {
     "*.html": "jinja-html"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
   }
 }
