@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request
 
+from utils.blood_pressure.status import (
+    get_blood_pressure_status,
+    get_blood_pressure_status_label,
+)
 from utils.blood_sugar.status import (
     get_blood_sugar_status,
     get_blood_sugar_status_label,
@@ -20,10 +24,15 @@ def home():
     blood_sugar_status = get_blood_sugar_status(100, "BEFORE", "30")
     blood_sugar_status_label = get_blood_sugar_status_label(blood_sugar_status)
 
+    blood_pressure_status = get_blood_pressure_status(100, 60)
+    blood_pressure_status_label = get_blood_pressure_status_label(blood_pressure_status)
+
     return render_template(
         "index.html",
         blood_sugar_status=blood_sugar_status,
         blood_sugar_status_label=blood_sugar_status_label,
+        blood_pressure_status=blood_pressure_status,
+        blood_pressure_status_label=blood_pressure_status_label,
     )
 
 

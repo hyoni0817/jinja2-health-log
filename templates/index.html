@@ -39,7 +39,9 @@
             <div class="card-description-value-container">
               <span class="card-description-value">100</span>
               <span class="card-description-unit">mmHg</span>
-              <span class="card-description-status">정상</span>
+              <span class="card-description-status card-description-status-{{ blood_pressure_status }}"
+                >{{ blood_pressure_status_label }}</span
+              >
             </div>
 
             <span class="card-description-heart_rate">맥박: 60 bpm</span>
