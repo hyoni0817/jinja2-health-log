@@ -12,13 +12,15 @@
       <div class="card latest-metrics-card">
         <div class="latest-metrics-header">
           <h2 class="latest-metrics-header-title">최근 혈당 수치</h2>
-          <p class="latest-metrics-header-date">측정일: 2025-10-31</p>
+          <p class="latest-metrics-header-date" data-date="{{ latest_blood_sugar.date }}">
+            측정일: <span class="formatted-date"></span>
+          </p>
         </div>
 
         <div class="latest-metrics-content">
           <div class="latest-metrics-description">
             <div class="latest-metrics-description-value-container">
-              <span class="latest-metrics-description-value">100</span>
+              <span class="latest-metrics-description-value">{{ latest_blood_sugar.value }}</span>
               <span class="latest-metrics-description-unit">mg/dL</span>
               <span class="latest-metrics-description-status latest-metrics-description-status-{{ blood_sugar_status }}"
                 >{{ blood_sugar_status_label }}</span
@@ -31,13 +33,17 @@
       <div class="card latest-metrics-card">
         <div class="latest-metrics-header">
           <h2 class="latest-metrics-header-title">최근 혈압 수치</h2>
-          <p class="latest-metrics-header-date">측정일: 2025-10-31</p>
+          <p class="latest-metrics-header-date" data-date="{{ latest_blood_pressure.date }}">
+            측정일: <span class="formatted-date"></span>
+          </p>
         </div>
 
         <div class="latest-metrics-content">
           <div class="latest-metrics-description">
             <div class="latest-metrics-description-value-container">
-              <span class="latest-metrics-description-value">100</span>
+              <span class="latest-metrics-description-value"
+                >{{ latest_blood_pressure.systolic_bp }}/{{ latest_blood_pressure.diastolic_bp }}</span
+              >
               <span class="latest-metrics-description-unit">mmHg</span>
               <span
                 class="latest-metrics-description-status latest-metrics-description-status-{{ blood_pressure_status }}"
@@ -45,7 +51,7 @@
               >
             </div>
 
-            <span class="latest-metrics-description-heart_rate">맥박: 60 bpm</span>
+            <span class="latest-metrics-description-heart_rate">맥박: {{ latest_blood_pressure.heart_rate }} bpm</span>
           </div>
         </div>
       </div>
@@ -97,6 +103,42 @@
       </div>
     </section>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    (function () {
+      // 최근 혈당 날짜 포맷팅
+      const bloodSugarDateElement = document.querySelectorAll('.latest-metrics-header-date')[0];
+
+      console.log(bloodSugarDateElement);
+      if (bloodSugarDateElement) {
+        const rawDate = bloodSugarDateElement.getAttribute('data-date');
+        console.log(rawDate);
+        console.log(dayjs);
+        if (rawDate && typeof dayjs !== 'undefined') {
+          const formattedDate = dayjs(rawDate).format('YYYY.MM.DD');
+          const span = bloodSugarDateElement.querySelector('.formatted-date');
+          if (span) {
+            span.textContent = formattedDate;
+          }
+        }
+      }
+
+      // 최근 혈압 날짜 포맷팅 (동일한 패턴)
+      const bloodPressureDateElement = document.querySelectorAll('.latest-metrics-header-date')[1];
+      if (bloodPressureDateElement) {
+        const rawDate = bloodPressureDateElement.getAttribute('data-date');
+        if (rawDate && typeof dayjs !== 'undefined') {
+          const formattedDate = dayjs(rawDate).format('YYYY.MM.DD');
+          const span = bloodPressureDateElement.querySelector('.formatted-date');
+          if (span) {
+            span.textContent = formattedDate;
+          }
+        }
+      }
+    })();
+  </script>
 
   <script>
     (function () {
