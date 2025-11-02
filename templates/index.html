@@ -1,4 +1,51 @@
 {% extends "layout.html" %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+{% endblock %}
+
 {% block content %}
-  <p style="color: var(--text); font-size: 2.4rem; font-weight: 700;">{{ position }}</p>
+  <div class="page-container">
+    <h1 class="page-title">대시보드</h1>
+    <p class="page-description">건강 지표와 변화 추이를 모니터링하세요.</p>
+
+    <section class="latest-metrics-section">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title">최근 혈당 수치</h2>
+          <p class="card-header-date">측정일: 2025-10-31</p>
+        </div>
+
+        <div class="card-content">
+          <div class="card-description">
+            <div class="card-description-value-container">
+              <span class="card-description-value">100</span>
+              <span class="card-description-unit">mg/dL</span>
+              <span class="card-description-status card-description-status-{{ blood_sugar_status }}"
+                >{{ blood_sugar_status_label }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title">최근 혈압 수치</h2>
+          <p class="card-header-date">측정일: 2025-10-31</p>
+        </div>
+
+        <div class="card-content">
+          <div class="card-description">
+            <div class="card-description-value-container">
+              <span class="card-description-value">100</span>
+              <span class="card-description-unit">mmHg</span>
+              <span class="card-description-status">정상</span>
+            </div>
+
+            <span class="card-description-heart_rate">맥박: 60 bpm</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 {% endblock %}
