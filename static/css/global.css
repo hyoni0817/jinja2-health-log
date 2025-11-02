@@ -1,0 +1,83 @@
+@charset "UTF-8";
+@layer base {
+  :root {
+    --background: #f9fafb;
+    --nav-active: #e8e8e8;
+    --nav-hover: #e5e5e5;
+    --card: #ffffff;
+    --divider: #222222;
+    --text: #374151;
+    --text-subtitle: #999999;
+    --success: #34c759;
+    --chart-systolic: #fb923c;
+    --chart-diastolic: #1e293b;
+  }
+  html[data-theme=dark] {
+    --background: #0d0d0d;
+    --nav-active: #252525;
+    --nav-hover: #1c1c1f;
+    --card: #252525;
+    --divider: #4b4b4b;
+    --text: #ffffff;
+    --text-subtitle: #999999;
+    --success: #34c759;
+    --chart-systolic: #3b82f6;
+    --chart-diastolic: #fbbf24;
+  }
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* date picker 아이콘 - 라이트 모드에서는 기본 검은색 */
+input[type=date]::-webkit-calendar-picker-indicator {
+  opacity: 0.7;
+}
+
+/* date picker 아이콘 - 다크 모드에서는 반전시켜서 흰색으로 */
+[data-theme=dark] input[type=date]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 1;
+}
+
+/* input autofill 배경색 제거 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px var(--background) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/*# sourceMappingURL=global.css.map */

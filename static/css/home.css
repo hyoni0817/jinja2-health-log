@@ -1,0 +1,273 @@
+@charset "UTF-8";
+@layer base {
+  :root {
+    --background: #f9fafb;
+    --nav-active: #e8e8e8;
+    --nav-hover: #e5e5e5;
+    --card: #ffffff;
+    --divider: #222222;
+    --text: #374151;
+    --text-subtitle: #999999;
+    --success: #34c759;
+    --chart-systolic: #fb923c;
+    --chart-diastolic: #1e293b;
+  }
+  html[data-theme=dark] {
+    --background: #0d0d0d;
+    --nav-active: #252525;
+    --nav-hover: #1c1c1f;
+    --card: #252525;
+    --divider: #4b4b4b;
+    --text: #ffffff;
+    --text-subtitle: #999999;
+    --success: #34c759;
+    --chart-systolic: #3b82f6;
+    --chart-diastolic: #fbbf24;
+  }
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* date picker 아이콘 - 라이트 모드에서는 기본 검은색 */
+input[type=date]::-webkit-calendar-picker-indicator {
+  opacity: 0.7;
+}
+
+/* date picker 아이콘 - 다크 모드에서는 반전시켜서 흰색으로 */
+[data-theme=dark] input[type=date]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 1;
+}
+
+/* input autofill 배경색 제거 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px var(--background) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.page-container {
+  padding: 3.2rem 2.4rem;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.page-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.page-description {
+  font-size: 1.6rem;
+  color: var(--text-subtitle);
+  margin-bottom: 1.6rem;
+}
+
+.latest-metrics-section {
+  display: flex;
+  gap: 1.6rem;
+  margin-bottom: 2.4rem;
+}
+
+.card {
+  border-radius: 0.8rem;
+  padding: 1.6rem;
+  border: 1px solid var(--divider);
+}
+.card-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1.6rem;
+}
+
+.latest-metrics-card {
+  width: 50%;
+}
+
+.latest-metrics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.latest-metrics-header-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.latest-metrics-header-date {
+  font-size: 1.4rem;
+  color: var(--text-subtitle);
+}
+.latest-metrics-description {
+  display: flex;
+  flex-direction: column;
+}
+.latest-metrics-description-value-container {
+  display: flex;
+  align-items: center;
+}
+.latest-metrics-description-value {
+  display: inline-block;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-right: 0.4rem;
+}
+.latest-metrics-description-unit {
+  display: inline-block;
+  font-size: 1.6rem;
+  color: var(--text-subtitle);
+  margin-right: 1.2rem;
+}
+.latest-metrics-description-status {
+  display: inline-block;
+  font-size: 1.4rem;
+  color: var(--text-subtitle);
+}
+.latest-metrics-description-status-low {
+  color: #e4982e;
+}
+.latest-metrics-description-status-normal {
+  color: #4ead79;
+}
+.latest-metrics-description-status-borderline {
+  color: #e3702b;
+}
+.latest-metrics-description-status-high_stage_1 {
+  color: #e3702b;
+}
+.latest-metrics-description-status-high_stage_2 {
+  color: #db4757;
+}
+.latest-metrics-description-status-high_risk {
+  color: #db4757;
+}
+.latest-metrics-description-status-recheck {
+  color: #3b82f6;
+}
+.latest-metrics-description-heart_rate {
+  font-size: 1.4rem;
+  color: var(--text-subtitle);
+  margin-top: 0.8rem;
+}
+
+.sections-container {
+  display: flex;
+  gap: 1.6rem;
+  margin-bottom: 3.2rem;
+}
+
+.quick-actions-section {
+  width: 50%;
+}
+
+.action-and-insights-card {
+  height: 100%;
+}
+
+.quick-action-button {
+  width: 100%;
+  padding: 0.8rem 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  background-color: #f9f9f9;
+  color: #252525;
+  justify-content: space-between;
+  border-radius: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  font-size: 1.6rem;
+}
+.quick-action-button:hover {
+  background-color: #e8e8e8;
+}
+.quick-action-button:focus {
+  ring-color: #999999;
+}
+.quick-action-button-name-container {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.quick-action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.health-insights-section {
+  width: 50%;
+}
+
+.health-insights-description,
+.blood-sugar-trend-description {
+  font-size: 1.4rem;
+  color: var(--text-subtitle);
+  margin-bottom: 1.6rem;
+  line-height: 1.5;
+}
+
+.health-insights-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  text-align: center;
+  border: 1px solid var(--divider);
+  border-radius: 0.8rem;
+  color: var(--text);
+  font-size: 1.4rem;
+  margin-right: 0.8rem;
+  background: none;
+}
+
+svg[data-lucide=move-right] {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/*# sourceMappingURL=home.css.map */
