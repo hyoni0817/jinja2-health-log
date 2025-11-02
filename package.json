@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "flask:start": "flask run --debug",
+    "sass:watch": "sass --watch static/scss:static/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "hyoni",
