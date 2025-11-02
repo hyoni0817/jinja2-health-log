@@ -26,7 +26,6 @@
 }
 
 .card {
-  width: 50%;
   border-radius: 0.8rem;
   padding: 1.6rem;
   border: 1px solid var(--divider);
@@ -37,6 +36,10 @@
     color: var(--text);
     margin-bottom: 1.6rem;
   }
+}
+
+.latest-metrics-card {
+  width: 50%;
 }
 
 .latest-metrics {
@@ -118,6 +121,18 @@
   }
 }
 
+.sections-container {
+  display: flex;
+  gap: 1.6rem;
+}
+.quick-actions-section {
+  width: 50%;
+}
+
+.action-and-insights-card {
+  height: 100%;
+}
+
 .quick-action-button {
   width: 100%;
   padding: 0.8rem 1.6rem;
@@ -153,4 +168,35 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+}
+
+.health-insights-section {
+  width: 50%;
+}
+
+.health-insights-description {
+  font-size: 1.4rem;
+  color: var(--text-subtitle);
+  margin-bottom: 1.6rem;
+}
+
+.health-insights-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  text-align: center;
+  border: 1px solid var(--divider);
+  border-radius: 0.8rem;
+  color: var(--text);
+  font-size: 1.4rem;
+  margin-right: 0.8rem;
+  background: none;
+}
+
+svg[data-lucide='move-right'] {
+  width: 1.6rem;
+  height: 1.6rem;
 }

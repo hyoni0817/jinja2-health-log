@@ -9,7 +9,7 @@
     <p class="page-description">건강 지표와 변화 추이를 모니터링하세요.</p>
 
     <section class="latest-metrics-section">
-      <div class="card">
+      <div class="card latest-metrics-card">
         <div class="latest-metrics-header">
           <h2 class="latest-metrics-header-title">최근 혈당 수치</h2>
           <p class="latest-metrics-header-date">측정일: 2025-10-31</p>
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card latest-metrics-card">
         <div class="latest-metrics-header">
           <h2 class="latest-metrics-header-title">최근 혈압 수치</h2>
           <p class="latest-metrics-header-date">측정일: 2025-10-31</p>
@@ -53,7 +53,7 @@
 
     <div class="sections-container">
       <section class="quick-actions-section">
-        <div class="card">
+        <div class="card action-and-insights-card">
           <h2 class="card-title">빠른 액션</h2>
           <div class="quick-action-buttons-container">
             <button class="quick-action-button">
@@ -74,7 +74,19 @@
         </div>
       </section>
 
-      <section class="health-insights-section"></section>
+      <section class="health-insights-section">
+        <div class="card action-and-insights-card">
+          <h2 class="card-title">건강 인사이트</h2>
+          <p class="health-insights-description">
+            최근 측정값을 바탕으로 볼 때, 귀하의 건강 지표는 정상 범위 내에 있는 것으로 보입니다. 지속적인 모니터링은
+            추세와 잠재적인 문제를 조기에 파악하는 데 도움을 줍니다.
+          </p>
+          <button class="health-insights-button">
+            <span>자세히 보기</span>
+            <i data-lucide="move-right"></i>
+          </button>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -82,6 +94,7 @@
     (function () {
       const eventListeners = [];
       const quickActionButtons = document.querySelectorAll('.quick-action-button');
+      const healthInsightsButton = document.querySelector('.health-insights-button');
 
       function handleQuickActionClick(event) {
         const button = event.currentTarget;
@@ -89,7 +102,7 @@
         alert('준비중입니다.');
       }
 
-      quickActionButtons.forEach((button) => {
+      [...quickActionButtons, healthInsightsButton].forEach((button) => {
         button.addEventListener('click', handleQuickActionClick);
         eventListeners.push({
           element: button,
