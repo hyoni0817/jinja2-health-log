@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html lang="ko" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Health Log with Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}" />
+  </head>
+
+  <body>
+    <div>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <p class="sidebar-header-title"><i data-lucide="activity"></i>HealthLog</p>
+          <p class="sidebar-header-subtitle">with Flask</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item">
+              <a href="/" class="sidebar-nav-link {% if currentPath == '/' %}active{% endif %}">
+                <i data-lucide="house"></i><span>홈</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        {% block content %}
+        {% endblock %}
+      </main>
+    </div>
+
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
