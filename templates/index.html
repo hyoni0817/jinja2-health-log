@@ -100,6 +100,7 @@
         <h2 class="card-title">혈당 추이</h2>
         <p class="blood-sugar-trend-description">지난 30일 동안의 혈당 추이를 보여줍니다.</p>
         <canvas id="blood-sugar-trend-chart"></canvas>
+        <span id="blood-sugar-trend-chart-data" data-chart-data="{{ blood_sugar_trend }}"></span>
       </div>
     </section>
   </div>
@@ -111,11 +112,9 @@
       // 최근 혈당 날짜 포맷팅
       const bloodSugarDateElement = document.querySelectorAll('.latest-metrics-header-date')[0];
 
-      console.log(bloodSugarDateElement);
       if (bloodSugarDateElement) {
         const rawDate = bloodSugarDateElement.getAttribute('data-date');
-        console.log(rawDate);
-        console.log(dayjs);
+
         if (rawDate && typeof dayjs !== 'undefined') {
           const formattedDate = dayjs(rawDate).format('YYYY.MM.DD');
           const span = bloodSugarDateElement.querySelector('.formatted-date');
@@ -174,6 +173,12 @@
   <!-- Chart.js 로드 (차트 스크립트보다 먼저) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
+  <!-- blood_sugar_trend 데이터를 JavaScript 변수로 전달 -->
+  <script>
+    // 서버에서 전달된 데이터를 전역 변수로 설정
+    window.bloodSugarTrendData = {{ blood_sugar_trend | tojson }};
+  </script>
+
   <script>
     // DOM 로드 완료 후 실행
     document.addEventListener('DOMContentLoaded', function () {
@@ -189,6 +194,9 @@
         console.error('Chart.js가 로드되지 않았습니다.');
         return;
       }
+
+      // blood_sugar_trend 데이터 로드 (두 가지 방법 모두 시도)
+      let chartData = window.bloodSugarTrendData || [];
 
       //  bloodSugarTrend 데이터를 차트용 데이터로 변환
       function mapToBloodSugarFloatingBarData(dailyStats) {
@@ -223,18 +231,7 @@
         return gradient;
       }
 
-      // 샘플 데이터
-      const sampleChartData = [
-        { date: '2024-11-01', min_value: 90, max_value: 120 },
-        { date: '2024-11-02', min_value: 85, max_value: 110 },
-        { date: '2024-11-03', min_value: 95, max_value: 95 }, // 단일 값
-        { date: '2024-11-04', min_value: 88, max_value: 125 },
-        { date: '2024-11-05', min_value: 92, max_value: 115 },
-        { date: '2024-11-06', min_value: 87, max_value: 108 },
-        { date: '2024-11-07', min_value: 93, max_value: 118 },
-      ];
-
-      const mappedData = mapToBloodSugarFloatingBarData(sampleChartData);
+      const mappedData = mapToBloodSugarFloatingBarData(chartData);
       const labels = mappedData.map((item) => item.x);
       const dataValues = mappedData.map((item) => item.y);
 
