@@ -88,6 +88,14 @@
         </div>
       </section>
     </div>
+
+    <section class="blood-sugar-trend-section">
+      <div class="card">
+        <h2 class="card-title">혈당 추이</h2>
+        <p class="blood-sugar-trend-description">지난 30일 동안의 혈당 추이를 보여줍니다.</p>
+        <canvas id="blood-sugar-trend-chart"></canvas>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -119,5 +127,153 @@
         eventListeners.length = 0;
       });
     })();
+  </script>
+
+  <!-- Chart.js 로드 (차트 스크립트보다 먼저) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <script>
+    // DOM 로드 완료 후 실행
+    document.addEventListener('DOMContentLoaded', function () {
+      // 캔버스 요소 확인
+      const canvas = document.getElementById('blood-sugar-trend-chart');
+      if (!canvas) {
+        console.error('차트 캔버스를 찾을 수 없습니다.');
+        return;
+      }
+
+      // Chart.js 로드 확인
+      if (typeof Chart === 'undefined') {
+        console.error('Chart.js가 로드되지 않았습니다.');
+        return;
+      }
+
+      //  bloodSugarTrend 데이터를 차트용 데이터로 변환
+      function mapToBloodSugarFloatingBarData(dailyStats) {
+        return (
+          dailyStats?.map((stat) => {
+            const minValue = stat.min_value;
+            const maxValue = stat.max_value;
+            const isSingle = minValue === maxValue;
+
+            // Chart.js Floating Bar 형식: [min, max] 배열
+            return {
+              x: dayjs ? dayjs(stat.date).format('MM.DD') : stat.date,
+              y: isSingle ? [minValue - 0.5, maxValue + 0.5] : [minValue, maxValue],
+              // 툴팁용 원본데이터
+              meta: {
+                actualMin: minValue,
+                actualMax: maxValue,
+                isSingleValue: isSingle,
+              },
+            };
+          }) || []
+        );
+      }
+
+      function createGradient(ctx, chartArea) {
+        if (!chartArea) return '#10b981'; // fallback
+
+        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+        gradient.addColorStop(0, '#34d399'); // 밝은 에메랄드 (emerald-400)
+        gradient.addColorStop(0.5, '#10b981'); // 에메랄드 (emerald-500)
+        gradient.addColorStop(1, '#047857'); // 진한 에메랄드 (emerald-700)
+        return gradient;
+      }
+
+      // 샘플 데이터
+      const sampleChartData = [
+        { date: '2024-11-01', min_value: 90, max_value: 120 },
+        { date: '2024-11-02', min_value: 85, max_value: 110 },
+        { date: '2024-11-03', min_value: 95, max_value: 95 }, // 단일 값
+        { date: '2024-11-04', min_value: 88, max_value: 125 },
+        { date: '2024-11-05', min_value: 92, max_value: 115 },
+        { date: '2024-11-06', min_value: 87, max_value: 108 },
+        { date: '2024-11-07', min_value: 93, max_value: 118 },
+      ];
+
+      const mappedData = mapToBloodSugarFloatingBarData(sampleChartData);
+      const labels = mappedData.map((item) => item.x);
+      const dataValues = mappedData.map((item) => item.y);
+
+      const options = {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          title: {
+            display: false,
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const dataIndex = context.dataIndex;
+                const meta = mappedData[dataIndex]?.meta;
+
+                if (meta?.isSingleValue) {
+                  return `혈당: ${meta.actualMin} mg/dL`;
+                }
+
+                const [min, max] = context.raw;
+                return `최저: ${min} mg/dL / 최고: ${max} mg/dL`;
+              },
+            },
+          },
+          legend: {
+            display: false,
+          },
+        },
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        scales: {
+          x: {
+            display: true,
+            ticks: {
+              maxTicksLimit: 7,
+            },
+          },
+          y: {
+            display: true,
+            beginAtZero: false,
+            min: function () {
+              // 데이터의 최소값에서 여유 공간 확보
+              const allValues = dataValues.flat();
+              const minValue = Math.min(...allValues);
+              return Math.max(0, minValue - 20);
+            },
+            max: function () {
+              const allValues = dataValues.flat();
+              const maxValue = Math.max(...allValues);
+              return maxValue + 20;
+            },
+          },
+        },
+      };
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: '혈당 범위 (mg/dL)',
+            data: dataValues, // [min, max] 배열의 배열
+            backgroundColor: function (context) {
+              const chart = context.chart;
+              const { ctx, chartArea } = chart;
+              return createGradient(ctx, chartArea);
+            },
+            borderColor: '#10b981',
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const ctx = canvas.getContext('2d');
+      const bloodSugarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options,
+      });
+    });
   </script>
 {% endblock %}

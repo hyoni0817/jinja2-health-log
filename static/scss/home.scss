@@ -124,6 +124,7 @@
 .sections-container {
   display: flex;
   gap: 1.6rem;
+  margin-bottom: 3.2rem;
 }
 .quick-actions-section {
   width: 50%;
@@ -174,10 +175,12 @@
   width: 50%;
 }
 
-.health-insights-description {
+.health-insights-description,
+.blood-sugar-trend-description {
   font-size: 1.4rem;
   color: var(--text-subtitle);
   margin-bottom: 1.6rem;
+  line-height: 1.5;
 }
 
 .health-insights-button {
