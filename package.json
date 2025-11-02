@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "prettier": "^3.6.2",
-    "prettier-plugin-jinja-template": "^2.1.0"
+    "prettier-plugin-jinja-template": "^2.1.0",
+    "sass": "^1.93.3"
   }
 }
