@@ -10,17 +10,17 @@
 
     <section class="latest-metrics-section">
       <div class="card">
-        <div class="card-header">
-          <h2 class="card-header-title">최근 혈당 수치</h2>
-          <p class="card-header-date">측정일: 2025-10-31</p>
+        <div class="latest-metrics-header">
+          <h2 class="latest-metrics-header-title">최근 혈당 수치</h2>
+          <p class="latest-metrics-header-date">측정일: 2025-10-31</p>
         </div>
 
-        <div class="card-content">
-          <div class="card-description">
-            <div class="card-description-value-container">
-              <span class="card-description-value">100</span>
-              <span class="card-description-unit">mg/dL</span>
-              <span class="card-description-status card-description-status-{{ blood_sugar_status }}"
+        <div class="latest-metrics-content">
+          <div class="latest-metrics-description">
+            <div class="latest-metrics-description-value-container">
+              <span class="latest-metrics-description-value">100</span>
+              <span class="latest-metrics-description-unit">mg/dL</span>
+              <span class="latest-metrics-description-status latest-metrics-description-status-{{ blood_sugar_status }}"
                 >{{ blood_sugar_status_label }}</span
               >
             </div>
@@ -29,25 +29,82 @@
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <h2 class="card-header-title">최근 혈압 수치</h2>
-          <p class="card-header-date">측정일: 2025-10-31</p>
+        <div class="latest-metrics-header">
+          <h2 class="latest-metrics-header-title">최근 혈압 수치</h2>
+          <p class="latest-metrics-header-date">측정일: 2025-10-31</p>
         </div>
 
-        <div class="card-content">
-          <div class="card-description">
-            <div class="card-description-value-container">
-              <span class="card-description-value">100</span>
-              <span class="card-description-unit">mmHg</span>
-              <span class="card-description-status card-description-status-{{ blood_pressure_status }}"
+        <div class="latest-metrics-content">
+          <div class="latest-metrics-description">
+            <div class="latest-metrics-description-value-container">
+              <span class="latest-metrics-description-value">100</span>
+              <span class="latest-metrics-description-unit">mmHg</span>
+              <span
+                class="latest-metrics-description-status latest-metrics-description-status-{{ blood_pressure_status }}"
                 >{{ blood_pressure_status_label }}</span
               >
             </div>
 
-            <span class="card-description-heart_rate">맥박: 60 bpm</span>
+            <span class="latest-metrics-description-heart_rate">맥박: 60 bpm</span>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="sections-container">
+      <section class="quick-actions-section">
+        <div class="card">
+          <h2 class="card-title">빠른 액션</h2>
+          <div class="quick-action-buttons-container">
+            <button class="quick-action-button">
+              <div class="quick-action-button-name-container">
+                <i data-lucide="droplet"></i>
+                <span>혈당 데이터 추가</span>
+              </div>
+              <i data-lucide="plus"></i>
+            </button>
+            <button class="quick-action-button">
+              <div class="quick-action-button-name-container">
+                <i data-lucide="heart-pulse"></i>
+                <span>혈압 데이터 추가</span>
+              </div>
+              <i data-lucide="plus"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="health-insights-section"></section>
+    </div>
   </div>
+
+  <script>
+    (function () {
+      const eventListeners = [];
+      const quickActionButtons = document.querySelectorAll('.quick-action-button');
+
+      function handleQuickActionClick(event) {
+        const button = event.currentTarget;
+
+        alert('준비중입니다.');
+      }
+
+      quickActionButtons.forEach((button) => {
+        button.addEventListener('click', handleQuickActionClick);
+        eventListeners.push({
+          element: button,
+          handler: handleQuickActionClick,
+          event: 'click',
+        });
+      });
+
+      // 페이지 언로드 시 모든 이벤트 리스너 제거
+      window.addEventListener('beforeunload', () => {
+        eventListeners.forEach(({ element, handler, event }) => {
+          element.removeEventListener(event, handler);
+        });
+        eventListeners.length = 0;
+      });
+    })();
+  </script>
 {% endblock %}

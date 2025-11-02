@@ -31,6 +31,15 @@
   padding: 1.6rem;
   border: 1px solid var(--divider);
 
+  &-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1.6rem;
+  }
+}
+
+.latest-metrics {
   &-header {
     display: flex;
     justify-content: space-between;
@@ -107,4 +116,41 @@
       }
     }
   }
+}
+
+.quick-action-button {
+  width: 100%;
+  padding: 0.8rem 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  background-color: $gray-75;
+  color: $gray-800;
+  justify-content: space-between;
+  border-radius: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  font-size: 1.6rem;
+
+  &:hover {
+    background-color: $gray-200;
+  }
+
+  &:focus {
+    ring-color: $gray-500;
+  }
+
+  &-name-container {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+}
+
+.quick-action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
