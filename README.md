@@ -1,7 +1,7 @@
 <h1 align="center">🫀Health Log With Flask</h1>
 <div align="center" >
   Next.js로 기획 및 개발된 프로젝트를 Flask와 Jinja2로 다시 개발한 혈당 및 혈압 관리를 도와주는 웹앱입니다.<br />
-  <a href="https://github.com/hyoni0817/health-log">Next로 개발한 코드 보러가기</a>
+  <a href="https://github.com/hyoni0817/health-log">Next.js로 개발한 코드 보러가기</a>
 </div>
 
 
